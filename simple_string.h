@@ -50,6 +50,8 @@ extern int ss_cstr_strncmp(const char *str1, const char *str2, size_t n);
 extern void ss_cstr_strncpy(char *dest, const char *src, size_t n);
 extern simple_string_t slice_string(const simple_string_t * str,size_t start,size_t end);
 extern void rewrite_string(simple_string_t *dst, const char *new_content);
+extern int ss_is_digit(const simple_string_t *str);
+
 
 
 
@@ -58,6 +60,20 @@ extern void rewrite_string(simple_string_t *dst, const char *new_content);
 
 
 #ifdef SIMPLE_STRING_IMPLEMENTATION
+int ss_is_digit(const simple_string_t *str) {
+    if (str == NULL || str->string == NULL || str->length == 0) {
+        return 0; 
+    }
+
+    for (size_t i = 0; i < str->length; i++) {
+        if (str->string[i] < '0' || str->string[i] > '9') {
+            return 0; 
+        }
+    }
+
+    return 1; 
+}
+
 void rewrite_string(simple_string_t *dst, const char *new_content) {
     if (dst == NULL || new_content == NULL) {
         return; // Do nothing if the input is invalid
